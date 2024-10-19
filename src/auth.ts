@@ -3,7 +3,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from 'bcryptjs'
-import { prisma } from "@/prisma" // Update this path
+import { prisma } from "@/prisma" 
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -42,16 +43,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          // It's generally not recommended to include the password in the returned user object
           address: user.address,
           phone: user.phone
         }
       },
     })
   ],
-  pages: {
-    signIn: '/auth/signin',
-    error: '/auth/error',
-  },
-  debug: process.env.NODE_ENV === 'development',
+  secret: process.env.AUTH_SECRET,
+  // debug: process.env.NODE_ENV === 'development',
 })
