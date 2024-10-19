@@ -3,9 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from 'bcryptjs'
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient()
+import { prisma } from "@/prisma" // Update this path
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -33,8 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error("Invalid credentials")
         }
 
-      
-        const isPasswordValid = await compare(credentials.password as string, user.password)
+        const isPasswordValid = await compare(credentials.password as string, user.password as string)
 
         if (!isPasswordValid) {
           throw new Error("Invalid credentials")
@@ -45,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          password: user.password,
+          // It's generally not recommended to include the password in the returned user object
           address: user.address,
           phone: user.phone
         }
@@ -56,4 +53,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: '/auth/signin',
     error: '/auth/error',
   },
+  debug: process.env.NODE_ENV === 'development',
 })
