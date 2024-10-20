@@ -1,14 +1,15 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import image from '@/images/image.jpg'
+import image from '@/images/image.jpg';
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Poppins, Roboto } from 'next/font/google';
 import { signupAction } from '@/app/actions/signupAction';
+import { toast } from "sonner";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,7 +24,22 @@ const roboto = Roboto({
 });
 
 const SignupCredentials = () => {
-  const isLoading = false;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      await signupAction(new FormData(e.currentTarget));
+      toast.success("Account created successfully!");
+    } catch (error) {
+      console.error("Signup error:", error);
+      toast.error("Signup failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4 ${poppins.variable} ${roboto.variable} font-sans`}>
@@ -56,7 +72,7 @@ const SignupCredentials = () => {
             <p className="text-purple-600 font-roboto">Join our community and unlock amazing possibilities.</p>
           </motion.div>
 
-          <form action={signupAction} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -65,11 +81,11 @@ const SignupCredentials = () => {
             >
               <LabelInputContainer>
                 <Label htmlFor="firstname" className="text-indigo-700">First Name</Label>
-                <Input id="firstname" name="firstname" placeholder="John" type="text" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Input id="firstname" name="firstname" placeholder="John" type="text" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
               </LabelInputContainer>
               <LabelInputContainer>
-                <Label htmlFor="lastname" className="text-indigo-700">Last name</Label>
-                <Input id="lastname" name="lastname" placeholder="Doe" type="text" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Label htmlFor="lastname" className="text-indigo-700">Last Name</Label>
+                <Input id="lastname" name="lastname" placeholder="Doe" type="text" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
               </LabelInputContainer>
             </motion.div>
             <motion.div
@@ -79,7 +95,7 @@ const SignupCredentials = () => {
             >
               <LabelInputContainer>
                 <Label htmlFor="email" className="text-indigo-700">Email Address</Label>
-                <Input id="email" name="email" placeholder="johndoe@example.com" type="email" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Input id="email" name="email" placeholder="johndoe@example.com" type="email" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
               </LabelInputContainer>
             </motion.div>
             <motion.div
@@ -89,10 +105,9 @@ const SignupCredentials = () => {
             >
               <LabelInputContainer>
                 <Label htmlFor="password" className="text-indigo-700">Password</Label>
-                <Input id="password" name="password" placeholder="••••••••" type="password" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Input id="password" name="password" placeholder="••••••••" type="password" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
               </LabelInputContainer>
             </motion.div>
-            
 
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -130,10 +145,10 @@ const SignupCredentials = () => {
         </div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default SignupCredentials
+export default SignupCredentials;
 
 const BottomGradient = () => {
   return (
@@ -143,7 +158,7 @@ const BottomGradient = () => {
     </>
   );
 };
- 
+
 const LabelInputContainer = ({
   children,
   className,

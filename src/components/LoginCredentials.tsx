@@ -4,22 +4,23 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import loginImage from '@/images/image.jpg'  
+import loginImage from "@/images/image.jpg";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Poppins, Roboto } from 'next/font/google';
+import { Poppins, Roboto } from "next/font/google";
 import { loginAction } from "@/app/actions/loginAction";
+import { toast } from "sonner";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--font-poppins',
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-poppins",
 });
 
 const roboto = Roboto({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-roboto',
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-roboto",
 });
 
 const LoginCredentials = () => {
@@ -28,29 +29,33 @@ const LoginCredentials = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
     try {
       await loginAction(new FormData(e.currentTarget));
+      toast.success("Logged in successfully!"); 
     } catch (error) {
       console.error("Login error:", error);
-      // Handle error (e.g., show error message to user)
+      toast.error("Wrong Credentials. Please try again."); 
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4 ${poppins.variable} ${roboto.variable} font-sans`}>
-      <motion.div 
+    <div
+      className={`min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4 ${poppins.variable} ${roboto.variable} font-sans`}
+    >
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-4xl w-full flex"
       >
         <div className="w-1/2 hidden md:block relative">
-          <Image 
-            alt='Login image' 
-            src={loginImage} 
-            layout="fill" 
+          <Image
+            alt="Login image"
+            src={loginImage}
+            layout="fill"
             objectFit="cover"
             className="transition-all duration-300 transform hover:scale-105"
             priority
@@ -59,14 +64,18 @@ const LoginCredentials = () => {
         </div>
 
         <div className="w-full md:w-1/2 p-8 md:p-12">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-indigo-900 mb-2 font-poppins">Welcome Back</h1>
-            <p className="text-purple-600 font-roboto">Log in to continue your journey with us.</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-indigo-900 mb-2 font-poppins">
+              Welcome Back
+            </h1>
+            <p className="text-purple-600 font-roboto">
+              Log in to continue your journey with us.
+            </p>
           </motion.div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -76,8 +85,17 @@ const LoginCredentials = () => {
               transition={{ delay: 0.3, duration: 0.5 }}
             >
               <LabelInputContainer>
-                <Label htmlFor="email" className="text-indigo-700">Email Address</Label>
-                <Input id="email" name="email" placeholder="johndoe@example.com" type="email" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Label htmlFor="email" className="text-indigo-700">
+                  Email Address
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="johndoe@example.com"
+                  type="email"
+                  required
+                  className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto"
+                />
               </LabelInputContainer>
             </motion.div>
             <motion.div
@@ -86,8 +104,17 @@ const LoginCredentials = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
             >
               <LabelInputContainer>
-                <Label htmlFor="password" className="text-indigo-700">Password</Label>
-                <Input id="password" name="password" placeholder="••••••••" type="password" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Label htmlFor="password" className="text-indigo-700">
+                  Password
+                </Label>
+                <Input
+                  id="password"
+                  name="password"
+                  placeholder="••••••••"
+                  type="password"
+                  required
+                  className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto"
+                />
               </LabelInputContainer>
             </motion.div>
 
@@ -106,20 +133,25 @@ const LoginCredentials = () => {
                   className="absolute left-0 top-0 h-full bg-indigo-800"
                 />
               ) : null}
-              <span className="relative z-10">{isLoading ? "Logging In..." : "Log In"}</span>
+              <span className="relative z-10">
+                {isLoading ? "Logging In..." : "Log In"}
+              </span>
               <BottomGradient />
             </motion.button>
           </form>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
             className="mt-8 text-center"
           >
             <p className="text-sm text-indigo-600 font-roboto">
-              Dont&apos;t have an account?{" "}
-              <Link href="/signup" className="text-purple-600 hover:underline font-semibold">
+              Don't have an account?{" "}
+              <Link
+                href="/signup"
+                className="text-purple-600 hover:underline font-semibold"
+              >
                 Sign Up
               </Link>
             </p>
@@ -127,10 +159,10 @@ const LoginCredentials = () => {
         </div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginCredentials
+export default LoginCredentials;
 
 const BottomGradient = () => {
   return (
@@ -140,7 +172,7 @@ const BottomGradient = () => {
     </>
   );
 };
- 
+
 const LabelInputContainer = ({
   children,
   className,
@@ -148,9 +180,5 @@ const LabelInputContainer = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  return (
-    <div className={cn("flex flex-col space-y-2", className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn("flex flex-col space-y-2", className)}>{children}</div>;
 };
