@@ -38,7 +38,7 @@ const LoginCredentials = () => {
       toast.success("Logged in successfully!"); 
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(String(error)); 
+      toast.error("Invalid credentials"); 
     } finally {
       setIsLoading(false);
     }
