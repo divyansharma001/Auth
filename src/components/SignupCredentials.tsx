@@ -10,9 +10,7 @@ import { Poppins, Roboto } from 'next/font/google';
 import { signupAction } from '@/app/actions/signupAction';
 import { toast } from "sonner";
 import signUpImage from '@/images/signupImage.jpg'
-import { Github, Mail } from "lucide-react";
-import { githubLogin } from "@/app/actions/githubLogin";
-import { googleLogin } from "@/app/actions/googleLogin";
+
 
 const poppins = Poppins({
   subsets: ['latin'],
