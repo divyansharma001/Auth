@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, { AuthError } from "next-auth"
 // import { PrismaAdapter } from "@auth/prisma-adapter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -55,6 +55,41 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: '/login',
+  },
+  callbacks : {
+    signIn: async({ user, account, profile, email, credentials }) => {
+      if(account?.provider === 'google'){
+      try {
+        const {email, name, image, id} = user;
+
+        const alreadyUser = await prisma.user.findUnique({
+          where: {
+            email: email ?? ''
+          }
+        })
+
+        if(!alreadyUser){
+          await prisma.user.create({
+            data: {
+              email: email ?? '',
+              firstName: name ?? '',
+              lastName: '', // Add a default or appropriate value for lastName
+              password: '', // Add a default or hashed password
+              image: image ?? " ",
+              googleId: id ?? " "
+            }
+          })
+        }
+
+        return true;
+
+      } catch (error) {
+        throw new AuthError('Error signing in with Google')
+      }
+    }
+
+    return false
   }
+  },
   // debug: process.env.NODE_ENV === 'development',
 })
