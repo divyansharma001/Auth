@@ -12,6 +12,7 @@ import { loginAction } from "@/app/actions/loginAction";
 import { toast } from "sonner";
 import { Github, Mail } from "lucide-react";
 import { googleLogin } from "@/app/actions/googleLogin";
+import { githubLogin } from "@/app/actions/githubLogin";
 
 
 const poppins = Poppins({
@@ -166,7 +167,7 @@ const LoginCredentials = () => {
                 Google
               </motion.button>
               </form>
-              
+              <form action={githubLogin}>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -175,6 +176,7 @@ const LoginCredentials = () => {
                 <Github className="w-5 h-5 mr-2" />
                 GitHub
               </motion.button>
+              </form>
             </div>
           </div>
 
