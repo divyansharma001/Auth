@@ -69,8 +69,8 @@ const SignupCredentials = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-indigo-900 mb-2 font-poppins">Start Your Journey</h1>
-            <p className="text-purple-600 font-roboto">Join our community and unlock amazing possibilities.</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-indigo-900 mb-2 font-poppins">Start Your Auth Journey</h1>
+            <p className="text-purple-600 font-roboto">Integrate auth faster without any stress.</p>
           </motion.div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
