@@ -10,6 +10,7 @@ export async function signupAction(formData: FormData) {
   const password = formData.get('password') as string;
 
   if (!firstname || !lastname || !email || !password) {
+   
     throw new Error('All fields are required');
   }
 
@@ -18,6 +19,7 @@ export async function signupAction(formData: FormData) {
   });
 
   if (user) {
+   
     throw new Error('User already exists');
   }
 

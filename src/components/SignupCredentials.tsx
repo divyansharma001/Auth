@@ -35,7 +35,7 @@ const SignupCredentials = () => {
       toast.success("Account created successfully!");
     } catch (error) {
       console.error("Signup error:", error);
-      toast.error("Signup failed. Please try again.");
+      toast.error(String(error));
     } finally {
       setIsLoading(false);
     }
