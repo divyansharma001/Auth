@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { FlipWordsDemo } from "@/components/FlipWords";
 import { LandingPage } from "@/components/LandingPage";
 import { LogoutButton } from "@/components/Logout";
 
