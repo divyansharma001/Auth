@@ -4,11 +4,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import loginImage from '@/images/image.jpg'  
+import image from '@/images/image.jpg'
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Poppins, Roboto } from 'next/font/google';
-import { loginAction } from "@/app/actions/loginAction";
+import { signupAction } from '@/app/actions/signupAction';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -22,21 +22,8 @@ const roboto = Roboto({
   variable: '--font-roboto',
 });
 
-const LoginCredentials = () => {
+const SignupCredentials = () => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      await loginAction(new FormData(e.currentTarget));
-    } catch (error) {
-      console.error("Login error:", error);
-      // Handle error (e.g., show error message to user)
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4 ${poppins.variable} ${roboto.variable} font-sans`}>
@@ -48,8 +35,8 @@ const LoginCredentials = () => {
       >
         <div className="w-1/2 hidden md:block relative">
           <Image 
-            alt='Login image' 
-            src={loginImage} 
+            alt='Welcome image' 
+            src={image} 
             layout="fill" 
             objectFit="cover"
             className="transition-all duration-300 transform hover:scale-105"
@@ -65,19 +52,24 @@ const LoginCredentials = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-indigo-900 mb-2 font-poppins">Welcome Back</h1>
-            <p className="text-purple-600 font-roboto">Log in to continue your journey with us.</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-indigo-900 mb-2 font-poppins">Start Your Journey</h1>
+            <p className="text-purple-600 font-roboto">Join our community and unlock amazing possibilities.</p>
           </motion.div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <motion.div
+          <form action={signupAction} className="space-y-6">
+            <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
+              className="grid grid-cols-2 gap-4"
             >
               <LabelInputContainer>
-                <Label htmlFor="email" className="text-indigo-700">Email Address</Label>
-                <Input id="email" name="email" placeholder="johndoe@example.com" type="email" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Label htmlFor="firstname" className="text-indigo-700">First Name</Label>
+                <Input id="firstname" name="firstname" placeholder="John" type="text" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+              </LabelInputContainer>
+              <LabelInputContainer>
+                <Label htmlFor="lastname" className="text-indigo-700">Last name</Label>
+                <Input id="lastname" name="lastname" placeholder="Doe" type="text" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
               </LabelInputContainer>
             </motion.div>
             <motion.div
@@ -86,10 +78,21 @@ const LoginCredentials = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
             >
               <LabelInputContainer>
-                <Label htmlFor="password" className="text-indigo-700">Password</Label>
-                <Input id="password" name="password" placeholder="••••••••" type="password" required className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+                <Label htmlFor="email" className="text-indigo-700">Email Address</Label>
+                <Input id="email" name="email" placeholder="johndoe@example.com" type="email" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
               </LabelInputContainer>
             </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <LabelInputContainer>
+                <Label htmlFor="password" className="text-indigo-700">Password</Label>
+                <Input id="password" name="password" placeholder="••••••••" type="password" className="transition-all duration-200 focus:ring-2 focus:ring-purple-500 font-roboto" />
+              </LabelInputContainer>
+            </motion.div>
+            
 
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -106,7 +109,7 @@ const LoginCredentials = () => {
                   className="absolute left-0 top-0 h-full bg-indigo-800"
                 />
               ) : null}
-              <span className="relative z-10">{isLoading ? "Logging In..." : "Log In"}</span>
+              <span className="relative z-10">{isLoading ? "Creating Your Account..." : "Sign Up"}</span>
               <BottomGradient />
             </motion.button>
           </form>
@@ -114,13 +117,13 @@ const LoginCredentials = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
             className="mt-8 text-center"
           >
             <p className="text-sm text-indigo-600 font-roboto">
-              Don't have an account?{" "}
-              <Link href="/signup" className="text-purple-600 hover:underline font-semibold">
-                Sign Up
+              Already have an account?{" "}
+              <Link href="/login" className="text-purple-600 hover:underline font-semibold">
+                Log In
               </Link>
             </p>
           </motion.div>
@@ -130,7 +133,7 @@ const LoginCredentials = () => {
   )
 }
 
-export default LoginCredentials
+export default SignupCredentials
 
 const BottomGradient = () => {
   return (
