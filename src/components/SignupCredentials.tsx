@@ -4,7 +4,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import image from '@/images/image.jpg';
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Poppins, Roboto } from 'next/font/google';
