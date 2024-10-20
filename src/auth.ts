@@ -1,10 +1,8 @@
 import NextAuth, { AuthError } from "next-auth"
-// import { PrismaAdapter } from "@auth/prisma-adapter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from 'bcryptjs'
 import { prisma } from "@/prisma" 
-
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // adapter: PrismaAdapter(prisma),
@@ -84,6 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return true;
 
       } catch (error) {
+        console.error(error)
         throw new AuthError('Error signing in with Google')
       }
     }
