@@ -185,7 +185,7 @@ const LoginCredentials = () => {
             className="mt-8 text-center"
           >
             <p className="text-sm text-indigo-600 font-roboto">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/signup"
                 className="text-purple-600 hover:underline font-semibold"
