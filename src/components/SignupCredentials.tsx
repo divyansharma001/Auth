@@ -23,7 +23,7 @@ const roboto = Roboto({
 });
 
 const SignupCredentials = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = false;
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4 ${poppins.variable} ${roboto.variable} font-sans`}>
