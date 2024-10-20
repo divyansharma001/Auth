@@ -4,7 +4,6 @@ import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from 'bcryptjs'
 import { prisma } from "@/prisma" 
-import { Github } from "lucide-react"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // adapter: PrismaAdapter(prisma),
