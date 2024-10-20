@@ -47,13 +47,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     })
   ],
-
-
-  
   secret: process.env.AUTH_SECRET,
   pages: {
-    signIn: '/login',
+    signIn: '/auth/signin', 
+    error: '/auth/error',  
   },
+  
   callbacks : {
     signIn: async({ user, account}) => {
       if(account?.provider === 'google'){
@@ -83,11 +82,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       } catch (error) {
         console.error(error)
-        throw new AuthError('Error signing in with Google')
+        // throw new AuthError('Error signing in with Google')
+        return false; 
       }
     }
 
-    return false
+    return true;
   }
   },
   // debug: process.env.NODE_ENV === 'development',

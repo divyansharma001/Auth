@@ -1,7 +1,5 @@
 'use server';
 import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
-import { redirect } from "next/navigation";
 import { prisma } from "@/prisma";
 
 export async function loginAction(formData: FormData) {
@@ -9,37 +7,37 @@ export async function loginAction(formData: FormData) {
   const password = formData.get('password') as string;
 
   if (!email || !password) {
-    throw new Error('All fields are required');
+    throw new Error("Please provide both email and password ");
   }
 
   const user = await prisma.user.findUnique({
     where: { email }
-  })
+  });
 
-  if(!user){
-    throw new Error('User does not exists');
+  if (!user) {
+    throw new Error('User does not exist');
   }
-    
+
   try {
-    await signIn("credentials", {
+    const result = await signIn("credentials", {
       email,
       password,
-      redirect: false,
+      redirect: false,  // Disable automatic redirection
     });
-    
-   
-    redirect('/');
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          throw new Error("Invalid credentials");
-       
-        default:
-          throw new Error("Something went wrong");
-        
-      }
+
+    console.log("result", result);
+
+    if (!result.success) {
+      throw new Error('Invalid credentials');
     }
-    throw error;
+
+    // Instead of redirecting here, return a URL to redirect on the client side
+    return {
+      success: true,
+      redirectUrl: '/',  // Return the URL for client-side redirection
+    };
+  } catch (error) {
+    console.error(error);
+    throw new Error('Invalid credentials');
   }
 }
