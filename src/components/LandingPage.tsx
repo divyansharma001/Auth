@@ -13,7 +13,7 @@ export function LandingPage() {
         >
           Divyansh Sharma
         </LinkPreview>{" "}
-        currently a SDE intern and currently contributing to open-source.
+        currently a SDE intern and contributing to open-source.
       </p>
       <p className="text-neutral-500 dark:text-neutral-400 text-xl md:text-3xl max-w-3xl mx-auto ">
         Check out my{" "}
