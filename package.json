@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "setup": "git clone https://github.com/divyansharma001/Auth.git && cd Auth && npm install && npm run prisma:setup",
+    "prisma:setup": "prisma generate && prisma migrate dev --name init",
     "lint": "next lint",
     "vercel-build": "prisma generate && next build",
     "postinstall": "prisma generate"
