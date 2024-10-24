@@ -1,5 +1,7 @@
 import { auth } from "@/auth";
+import { CommandCopyExample } from "@/components/Commands";
 import { FlipWordsDemo } from "@/components/FlipWords";
+import { HeroHighlightDemo } from "@/components/HeroSectionPhone";
 import { LandingPage } from "@/components/LandingPage";
 import { LogoutButton } from "@/components/Logout";
 
@@ -19,7 +21,9 @@ export default async function Home() {
   return (
    <div>
     <div>
-    <TypewriterEffectSmoothDemo/>
+    <div className="md:block hidden"><TypewriterEffectSmoothDemo/></div>
+    <div className="md:hidden block"><HeroHighlightDemo/></div>
+    <CommandCopyExample/>
      <LandingPage/>
      <FlipWordsDemo/>
      <LogoutButton/>
